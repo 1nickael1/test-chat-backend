@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const express = require('express');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
@@ -6,7 +8,7 @@ const cors = require('cors');
 
 
 const app = express();
-app.use(cors('http://localhost:3000/'));
+app.use(cors(process.env.ORIGIN));
 
 // app.use((req,res,next)=>{
 //     res.setHeader('Access-Control-Allow-Origin','*');
@@ -18,8 +20,8 @@ app.use(cors('http://localhost:3000/'));
 // const server = Server(app);
 // const io = require('socket.io')(server);
 
-app.get('/',(req, res) => {
-    return res.json({ok: 'ok'})
+app.get('/', (req, res) => {
+    res.send('hello world')
 })
 
 const server = createServer(app);
@@ -32,7 +34,7 @@ const io = new Server(server, {
 });
 
 server.listen(process.env.PORT, () => {
-  console.log('Server listening on port 3001');
+  console.log(`Server listening on port ${process.env.PORT}`);
 });
 
 io.on('connection', (socket) => {
