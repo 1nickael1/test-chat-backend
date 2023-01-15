@@ -18,6 +18,10 @@ app.use(cors('http://localhost:3000/'));
 // const server = Server(app);
 // const io = require('socket.io')(server);
 
+app.get('/',(req, res) => {
+    return res.json({ok: 'ok'})
+})
+
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
